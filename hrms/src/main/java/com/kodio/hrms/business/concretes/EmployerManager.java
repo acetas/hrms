@@ -53,11 +53,7 @@ public class EmployerManager implements EmployerService {
 			
 			return new ErrorDataResult<EmployersRequest>(addEmployersRequests, "Your password does not match. Try again");
 		
-		} else if(addEmployersRequests.getCompanyName().isEmpty()){
-			
-			return new ErrorDataResult<EmployersRequest>(addEmployersRequests, "Company Name cannot be empty");
-			
-		}else if(addEmployersRequests.getPhone().isEmpty()){
+		} else if(addEmployersRequests.getPhone().isEmpty()){
 			
 			return new ErrorDataResult<EmployersRequest>(addEmployersRequests, "Phone cannot be empty");
 			
@@ -69,7 +65,7 @@ public class EmployerManager implements EmployerService {
 					.email(addEmployersRequests.getEmail())
 					.username(addEmployersRequests.getUsername())
 					.password(md5Password)
-					.companyName(addEmployersRequests.getCompanyName())
+					.company(addEmployersRequests.getCompany())
 					.website(addEmployersRequests.getWebsite())
 					.phone(addEmployersRequests.getPhone())
 					.build();

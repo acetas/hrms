@@ -1,5 +1,7 @@
 package com.kodio.hrms.business.requests;
 
+import com.kodio.hrms.entities.concretes.Company;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,10 +16,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployersRequest extends UserRequest {
-
-	@NotNull
-	@NotBlank
-	private String companyName;
 	
 	@NotNull
 	@NotBlank
@@ -27,4 +25,6 @@ public class EmployersRequest extends UserRequest {
 	@NotBlank
 	private String phone;
 	
+	@NotNull
+	private Company company;
 }

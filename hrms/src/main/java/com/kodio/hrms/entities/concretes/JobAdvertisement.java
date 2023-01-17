@@ -31,6 +31,7 @@ public class JobAdvertisement {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
 	
 	@Column(name="isTemporary")
@@ -39,12 +40,15 @@ public class JobAdvertisement {
 	@Column(name="validity")
 	private int validity;
 	
+	@NotNull
 	@Column(name="vacancy")
 	private int vacancy;
 	
+	@NotNull
 	@Column(name="title")
 	private String title;
 
+	@NotNull
 	@Column(name = "description", columnDefinition = "TEXT")
 	private String description;
 	
@@ -67,14 +71,21 @@ public class JobAdvertisement {
 	@Column(name="maxSalary")
 	private String maxSalary;
 	
-	@Column(name="enabled")
-	private boolean enabled;
+	@Column(name="isEnabled")
+	private boolean isEnabled;
 	
 	@OneToOne
+	@NotNull
 	private City city;
 
 	@ManyToOne
 	@JoinColumn(name="jobPositionId")
+	@NotNull
 	private JobPosition jobPosition;
+	
+	@ManyToOne
+	@JoinColumn(name="employerId")
+	@NotNull
+	private Employer employer;
 	
 }
