@@ -1,5 +1,7 @@
 package com.kodio.hrms.entities.concretes;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -36,8 +39,9 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
+	@Builder.Default
 	@Column(name = "verification_code", length = 64)
-    private String verificationCode;
+    private String verificationCode = RandomStringUtils.randomAlphabetic(64);
     
 	@Column(name="mailEnabled")
 	private boolean mailEnabled;

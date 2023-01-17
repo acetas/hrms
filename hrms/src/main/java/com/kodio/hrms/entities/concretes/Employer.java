@@ -22,5 +22,11 @@ public class Employer extends User {
 
 	@Column(name = "companyName")
 	private String companyName;
+	
+	@Column(name = "webSite")
+	private String website;
+	
+	@Column(name = "phone")
+	private String phone;
 
 }

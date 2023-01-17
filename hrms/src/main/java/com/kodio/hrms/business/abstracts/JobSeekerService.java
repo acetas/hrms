@@ -6,4 +6,5 @@ import com.kodio.hrms.core.results.DataResult;
 public interface JobSeekerService {
 	
 	DataResult<AddJobSeekerRequest> add(AddJobSeekerRequest addJobSeekerRequest);
+
 }
