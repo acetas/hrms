@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kodio.hrms.business.abstracts.JobSeekerService;
-import com.kodio.hrms.business.requests.AddJobSeekerRequest;
+import com.kodio.hrms.business.requests.JobSeekerRequest;
 import com.kodio.hrms.core.results.DataResult;
 import com.kodio.hrms.core.results.ErrorDataResult;
 import com.kodio.hrms.core.results.SuccessDataResult;
@@ -18,48 +18,48 @@ public class JobSeekerManager implements JobSeekerService {
 	@Autowired
 	private JobSeekerRepository jobSeekerRepository;
 
-	public DataResult<AddJobSeekerRequest> add(AddJobSeekerRequest addJobSeekerRequest) {
+	public DataResult<JobSeekerRequest> add(JobSeekerRequest addJobSeekerRequest) {
 
 		//TODO don't repeat yourself principle için çözüm !?
 		if (jobSeekerRepository.existsByUsername(addJobSeekerRequest.getUsername())) {
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "Username already exists");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "Username already exists");
 		
 		} else if (jobSeekerRepository.existsByEmail(addJobSeekerRequest.getEmail())) {
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "This email is already in use");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "This email is already in use");
 		
 		}else if(!UserValidator.isValidEmail(addJobSeekerRequest)){
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "Invalid email. Try again");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "Invalid email. Try again");
 		
 		}else if(addJobSeekerRequest.getUsername().isEmpty()){
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "Username cannot be empty");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "Username cannot be empty");
 			
 		}else if(addJobSeekerRequest.getPassword().isEmpty()){
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "Password cannot be empty");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "Password cannot be empty");
 			
 		}else if(!addJobSeekerRequest.getPassword().equals(addJobSeekerRequest.getRePassword())) {
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "Your password does not match. Try again");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "Your password does not match. Try again");
 		
 		}else if(addJobSeekerRequest.getName().isEmpty()){
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "Name field cannot be empty");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "Name field cannot be empty");
 			
 		}else if(addJobSeekerRequest.getSurName().isEmpty()){
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "Surname field cannot be empty");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "Surname field cannot be empty");
 			
 		} else if(addJobSeekerRequest.getNationalIdentity().isEmpty()){
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "National id field cannot be empty");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "National id field cannot be empty");
 			
 		} else if(jobSeekerRepository.existsByNationalIdentity(addJobSeekerRequest.getNationalIdentity())){
 			
-			return new ErrorDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "National id is already in use");
+			return new ErrorDataResult<JobSeekerRequest>(addJobSeekerRequest, "National id is already in use");
 			
 		}else {
 			
@@ -75,7 +75,7 @@ public class JobSeekerManager implements JobSeekerService {
 
 			jobSeekerRepository.save(jobSeeker);
 			
-			return new SuccessDataResult<AddJobSeekerRequest>(addJobSeekerRequest, "JobSeeker added");
+			return new SuccessDataResult<JobSeekerRequest>(addJobSeekerRequest, "JobSeeker added");
 		}
 
 	}

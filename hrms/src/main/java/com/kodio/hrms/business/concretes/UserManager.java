@@ -8,7 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.kodio.hrms.business.abstracts.UserService;
-import com.kodio.hrms.business.requests.AddUserRequest;
+import com.kodio.hrms.business.requests.UserRequest;
 import com.kodio.hrms.core.results.DataResult;
 import com.kodio.hrms.core.results.ErrorDataResult;
 import com.kodio.hrms.core.results.SuccessDataResult;
@@ -30,31 +30,31 @@ public class UserManager implements UserService {
     private JavaMailSender mailSender;
 
 	@Override
-	public DataResult<AddUserRequest> add(AddUserRequest addUserRequest) throws UnsupportedEncodingException, MessagingException {
+	public DataResult<UserRequest> add(UserRequest addUserRequest) throws UnsupportedEncodingException, MessagingException {
 	
 		if(userRepository.existsByUsername(addUserRequest.getUsername())) {
 			
-			return new ErrorDataResult<AddUserRequest>(addUserRequest, "Username already exists");
+			return new ErrorDataResult<UserRequest>(addUserRequest, "Username already exists");
 		
 		}else if(userRepository.existsByEmail(addUserRequest.getEmail())) {
 			
-			return new ErrorDataResult<AddUserRequest>(addUserRequest, "This email is already in use");
+			return new ErrorDataResult<UserRequest>(addUserRequest, "This email is already in use");
 		
 		}else if(!UserValidator.isValidEmail(addUserRequest)){
 			
-			return new ErrorDataResult<AddUserRequest>(addUserRequest, "Invalid email. Try again");
+			return new ErrorDataResult<UserRequest>(addUserRequest, "Invalid email. Try again");
 		
 		}else if(addUserRequest.getUsername().isEmpty()){
 			
-			return new ErrorDataResult<AddUserRequest>(addUserRequest, "Username cannot be empty");
+			return new ErrorDataResult<UserRequest>(addUserRequest, "Username cannot be empty");
 			
 		}else if(addUserRequest.getPassword().isEmpty()){
 			
-			return new ErrorDataResult<AddUserRequest>(addUserRequest, "Password cannot be empty");
+			return new ErrorDataResult<UserRequest>(addUserRequest, "Password cannot be empty");
 			
 		}else if(!addUserRequest.getPassword().equals(addUserRequest.getRePassword())) {
 			
-			return new ErrorDataResult<AddUserRequest>(addUserRequest, "Your password does not match. Try again");
+			return new ErrorDataResult<UserRequest>(addUserRequest, "Your password does not match. Try again");
 		
 		}else {
 			
@@ -70,7 +70,7 @@ public class UserManager implements UserService {
 			
 			sendVerificationEmail(user, "http://localhost:8080/api/user");
 			
-			return new SuccessDataResult<AddUserRequest>(addUserRequest, "User added");
+			return new SuccessDataResult<UserRequest>(addUserRequest, "User added");
 		
 		}
 	
