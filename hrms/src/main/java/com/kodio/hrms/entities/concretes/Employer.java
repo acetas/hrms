@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Table(name = "employers")
 @PrimaryKeyJoinColumn(name = "userId")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisement"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisement","company"})
 public class Employer extends User {
 
 	@Column(name = "webSite")

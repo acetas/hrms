@@ -1,4 +1,4 @@
-package com.kodio.hrms.business.requests;
+package com.kodio.hrms.business.responses;
 
 import java.util.Date;
 
@@ -9,54 +9,35 @@ import com.kodio.hrms.entities.concretes.City;
 import com.kodio.hrms.entities.concretes.Employer;
 import com.kodio.hrms.entities.concretes.JobPosition;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class JobAdversimentRequest {
-
+public class GetAllEnabledJobAdversimentResponse {
+	
 	private boolean isTemporary;
-	
 	private int validity;
-	
-	@NotNull
 	private int vacancy;
-	
-	@NotNull
 	private String title;
-
-	@NotNull
 	private String description;
-	
-	@NotNull
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name="listingDate")
 	private Date listingDate;
 	
-	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name="applicationDeadline")
 	private Date applicationDeadline;
 	
 	private String minSalary;
-	
 	private String maxSalary;
-	
-	private boolean isEnabled;
-	
-	@NotNull
-	private City city;
 
-	@NotNull
+	private City city;
 	private JobPosition jobPosition;
-	
-	@NotNull
 	private Employer employer;
 	
 }

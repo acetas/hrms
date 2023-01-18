@@ -59,9 +59,9 @@ public class JobAdvertisement {
 	private Date listingDate;
 	
 	@NotNull
+	@Column(name="applicationDeadline")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern="dd/MM/yyyy")
-	@Column(name="applicationDeadline")
 	private Date applicationDeadline;
 
 	
