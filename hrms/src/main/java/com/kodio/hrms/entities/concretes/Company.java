@@ -34,6 +34,6 @@ public class Company {
 	private String name;
 	
 	@OneToMany(mappedBy = "company")
-	List<Employer> employer;
+	List<Employer> employers;
 	
 }

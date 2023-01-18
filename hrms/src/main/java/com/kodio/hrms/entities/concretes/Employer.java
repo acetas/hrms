@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Table(name = "employers")
 @PrimaryKeyJoinColumn(name = "userId")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisement","company"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertsiments","company"})
 public class Employer extends User {
 
 	@Column(name = "webSite")
@@ -35,7 +35,7 @@ public class Employer extends User {
 	private String phone;
 
 	@OneToMany(mappedBy = "employer")
-	private List<JobAdvertisement> jobAdvertisement;
+	private List<JobAdvertsiment> jobAdvertsiments;
 	
 	@ManyToOne
 	@JoinColumn(name = "companyId")

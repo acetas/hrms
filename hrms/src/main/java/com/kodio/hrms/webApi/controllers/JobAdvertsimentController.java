@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kodio.hrms.business.abstracts.JobAdversimentService;
+import com.kodio.hrms.business.abstracts.JobAdvertsimentService;
 import com.kodio.hrms.business.requests.JobAdversimentRequest;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/jobadversiment/")
-public class JobAdversimentController {
+public class JobAdvertsimentController {
 
 	@Autowired
-	private JobAdversimentService jobAdversimentService;
+	private JobAdvertsimentService jobAdversimentService;
 	
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody JobAdversimentRequest jobAdversimentRequest){
@@ -39,5 +39,11 @@ public class JobAdversimentController {
 	public ResponseEntity<?> getAllEnabledByDesc(){
 		return ResponseEntity.ok(jobAdversimentService.getAllEnabledByListingDateDesc());
 	}
+	
+	
+//	@GetMapping("getByCompany")
+//	public ResponseEntity<?> getAllJobAdvForCompany(@RequestParam int id){
+//		return ResponseEntity.ok(jobAdversimentService.getAllJobAdvForCompany(id));
+//	}
 		
 }

@@ -6,16 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kodio.hrms.business.abstracts.JobAdversimentService;
+import com.kodio.hrms.business.abstracts.JobAdvertsimentService;
 import com.kodio.hrms.business.requests.JobAdversimentRequest;
 import com.kodio.hrms.business.responses.GetAllEnabledJobAdversimentResponse;
 import com.kodio.hrms.core.results.DataResult;
 import com.kodio.hrms.core.results.SuccessDataResult;
 import com.kodio.hrms.dataAccess.abstracts.JobAdversimentRepository;
-import com.kodio.hrms.entities.concretes.JobAdvertisement;
+import com.kodio.hrms.entities.concretes.JobAdvertsiment;
 
 @Service
-public class JobAdversimentManager implements JobAdversimentService {
+public class JobAdvertsimentManager implements JobAdvertsimentService {
 
 	@Autowired
 	private JobAdversimentRepository jobAdversimentRepository;
@@ -23,7 +23,7 @@ public class JobAdversimentManager implements JobAdversimentService {
 	@Override
 	public DataResult<JobAdversimentRequest> add(JobAdversimentRequest jobAdversimentRequest) {
 		
-		JobAdvertisement jobAdvertisement = JobAdvertisement.builder()
+		JobAdvertsiment jobAdvertisement = JobAdvertsiment.builder()
 		.isTemporary(jobAdversimentRequest.isTemporary())
 		.validity(jobAdversimentRequest.getValidity())
 		.vacancy(jobAdversimentRequest.getVacancy())
@@ -47,11 +47,11 @@ public class JobAdversimentManager implements JobAdversimentService {
 	@Override
 	public DataResult<List<GetAllEnabledJobAdversimentResponse>> getAllEnabledJobAdversiment() {
 		
-		List<JobAdvertisement> enabledJobAds = jobAdversimentRepository.findByIsEnabled(true);
+		List<JobAdvertsiment> enabledJobAds = jobAdversimentRepository.findByIsEnabled(true);
 		List<GetAllEnabledJobAdversimentResponse> getAllEnabledJobAds = new ArrayList<>();
 		
 		
-		for (JobAdvertisement enabledJobAd : enabledJobAds) {
+		for (JobAdvertsiment enabledJobAd : enabledJobAds) {
 			GetAllEnabledJobAdversimentResponse jobAdvertisement = GetAllEnabledJobAdversimentResponse.builder()
 					.isTemporary(enabledJobAd.isTemporary())
 					.validity(enabledJobAd.getValidity())
@@ -78,11 +78,11 @@ public class JobAdversimentManager implements JobAdversimentService {
 	@Override
 	public DataResult<List<GetAllEnabledJobAdversimentResponse>> getAllEnabledByListingDateAsc() {
 		
-		List<JobAdvertisement> enabledJobAds = jobAdversimentRepository.findByIsEnabled_OrderByListingDateAsc(true);
+		List<JobAdvertsiment> enabledJobAds = jobAdversimentRepository.findByIsEnabled_OrderByListingDateAsc(true);
 		List<GetAllEnabledJobAdversimentResponse> getAllEnabledJobAds = new ArrayList<>();
 		
 		
-		for (JobAdvertisement enabledJobAd : enabledJobAds) {
+		for (JobAdvertsiment enabledJobAd : enabledJobAds) {
 			GetAllEnabledJobAdversimentResponse jobAdvertisement = GetAllEnabledJobAdversimentResponse.builder()
 					.isTemporary(enabledJobAd.isTemporary())
 					.validity(enabledJobAd.getValidity())
@@ -108,11 +108,11 @@ public class JobAdversimentManager implements JobAdversimentService {
 
 	@Override
 	public DataResult<List<GetAllEnabledJobAdversimentResponse>> getAllEnabledByListingDateDesc() {
-		List<JobAdvertisement> enabledJobAds = jobAdversimentRepository.findByIsEnabled_OrderByListingDateDesc(true);
+		List<JobAdvertsiment> enabledJobAds = jobAdversimentRepository.findByIsEnabled_OrderByListingDateDesc(true);
 		List<GetAllEnabledJobAdversimentResponse> getAllEnabledJobAds = new ArrayList<>();
 		
 		
-		for (JobAdvertisement enabledJobAd : enabledJobAds) {
+		for (JobAdvertsiment enabledJobAd : enabledJobAds) {
 			GetAllEnabledJobAdversimentResponse jobAdvertisement = GetAllEnabledJobAdversimentResponse.builder()
 					.isTemporary(enabledJobAd.isTemporary())
 					.validity(enabledJobAd.getValidity())
@@ -135,5 +135,12 @@ public class JobAdversimentManager implements JobAdversimentService {
 		return new SuccessDataResult<List<GetAllEnabledJobAdversimentResponse>>(getAllEnabledJobAds, "Vacancies listed, Sort Desc");
 		
 	}
+
+//	@Override
+//	public DataResult<List<JobAdvertsimentWithCompanyDto>> getAllJobAdvForCompany(int id) {
+//		
+//		return new SuccessDataResult<List<JobAdvertsimentWithCompanyDto>>(jobAdversimentRepository.findByCompanyId(id), "Job Advertsiment listed for Company");
+//		
+//	}
 
 }
