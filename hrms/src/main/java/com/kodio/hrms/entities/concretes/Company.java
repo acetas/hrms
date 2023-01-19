@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "companies")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employer"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employers"})
 public class Company {
 
 	@Id
