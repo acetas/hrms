@@ -5,9 +5,11 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "educations")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
 public class Education {
 
 	@Id
@@ -50,7 +53,7 @@ public class Education {
 	@JoinColumn(name = "highSchoolId")
 	private HighSchool highSchool;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cvId")
 	private Cv cv;
 	

@@ -2,8 +2,7 @@ package com.kodio.hrms.entities.concretes;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +21,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cvs")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","educations"})
 public class Cv {
 
 	@Id
@@ -36,15 +34,24 @@ public class Cv {
 	@Column(name = "otherTechnology")
 	private String[] otherTechnology;
 	
-	@OneToMany(mappedBy = "cv")
+	@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
 	private List<Education> educations;
 	
-	@OneToMany(mappedBy = "cv")
+	@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
 	private List<TechnologyKnowledge> technologyKnowledges;
+	
+	@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
+	private List<LanguageKnowledge> languageKnowledges;
+	
+	@OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
+	private List<Experience> experiences;
 	
 	@OneToOne
 	@JoinColumn(name = "candidateId")
 	private Candidate candidate;
+	
+	@Column(name = "summary", columnDefinition = "TEXT")
+	private String summary;
 	
 	
 }
