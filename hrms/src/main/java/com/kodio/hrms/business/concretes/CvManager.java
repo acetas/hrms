@@ -24,4 +24,9 @@ public class CvManager implements CvService {
 		
 	}
 
+	@Override
+	public DataResult<Cv> getByCandidate(int id) {
+		return new SuccessDataResult<Cv>(cvRepository.findByCandidateId(id), "Cv listed");
+	}
+
 }

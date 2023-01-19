@@ -7,5 +7,7 @@ import com.kodio.hrms.entities.concretes.Cv;
 
 @Repository
 public interface CvRepository extends JpaRepository<Cv, Integer> {
+	
+	Cv findByCandidateId(int id);
 
 }
