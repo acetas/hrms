@@ -33,5 +33,8 @@ public class Candidate extends User {
 
 	@Column(name = "birthdate")
 	private Date birthDate;
+	
+	@Column(name = "summary", columnDefinition = "TEXT")
+	private String summary;
 
 }

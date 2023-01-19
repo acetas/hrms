@@ -1,16 +1,12 @@
 package com.kodio.hrms.entities.concretes;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,30 +17,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "cvs")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","educations"})
-public class Cv {
+@Table(name = "technologyKnowledges")
+public class TechnologyKnowledge {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "avatar")
-	private String avatar;
-	
-	@Column(name = "otherTechnology")
-	private String[] otherTechnology;
-	
-	@OneToMany(mappedBy = "cv")
-	private List<Education> educations;
-	
-	@OneToMany(mappedBy = "cv")
-	private List<TechnologyKnowledge> technologyKnowledges;
-	
 	@OneToOne
-	@JoinColumn(name = "candidateId")
-	private Candidate candidate;
+	@JoinColumn(name = "technologyId")
+	private Technology technology;
 	
+	@ManyToOne
+	@JoinColumn(name = "cvId")
+	private Cv cv;
 	
 }
