@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "education")
+@Table(name = "educations")
 public class Education {
 
 	@Id
@@ -42,5 +44,9 @@ public class Education {
 	@NotNull
 	@Column(name = "isGraduated")
 	private boolean isGraduated;
+	
+	@OneToOne
+	@JoinColumn(name = "highSchoolId")
+	private HighSchool highSchool;
 	
 }
