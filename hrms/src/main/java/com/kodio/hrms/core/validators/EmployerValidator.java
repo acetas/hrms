@@ -5,11 +5,11 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.kodio.hrms.business.requests.EmployersRequest;
+import com.kodio.hrms.business.requests.EmployerRequest;
 
 public class EmployerValidator {
 
-    public static boolean isValidCompanyEmail(EmployersRequest addEmployersRequests) throws MalformedURLException {
+    public static boolean isValidCompanyEmail(EmployerRequest addEmployersRequests) throws MalformedURLException {
         
         URL companyURL = new URL(addEmployersRequests.getWebsite());
         String newCompanyURL = companyURL.getHost();

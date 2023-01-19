@@ -3,8 +3,6 @@ package com.kodio.hrms.business.concretes;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.kodio.hrms.business.abstracts.UserService;
@@ -12,13 +10,11 @@ import com.kodio.hrms.business.requests.UserRequest;
 import com.kodio.hrms.core.results.DataResult;
 import com.kodio.hrms.core.results.ErrorDataResult;
 import com.kodio.hrms.core.results.SuccessDataResult;
-import com.kodio.hrms.core.utils.Encryptor;
-import com.kodio.hrms.core.validators.UserValidator;
+import com.kodio.hrms.core.utils.mailSender.BaseMailSender;
 import com.kodio.hrms.dataAccess.abstracts.UserRepository;
 import com.kodio.hrms.entities.concretes.User;
 
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class UserManager implements UserService {
@@ -27,82 +23,36 @@ public class UserManager implements UserService {
 	private UserRepository userRepository;
 
 	@Autowired
-    private JavaMailSender mailSender;
+    private BaseMailSender baseMailSender;
+	
+	@Autowired
+	private BaseUserManager baseUserManager;
 
 	@Override
 	public DataResult<UserRequest> add(UserRequest addUserRequest) throws UnsupportedEncodingException, MessagingException {
 	
-		if(userRepository.existsByUsername(addUserRequest.getUsername())) {
-			
-			return new ErrorDataResult<UserRequest>(addUserRequest, "Username already exists");
+		DataResult<UserRequest> result = baseUserManager.add(addUserRequest);
 		
-		}else if(userRepository.existsByEmail(addUserRequest.getEmail())) {
+		if(result.isSuccess() == false){
 			
-			return new ErrorDataResult<UserRequest>(addUserRequest, "This email is already in use");
-		
-		}else if(!UserValidator.isValidEmail(addUserRequest)){
-			
-			return new ErrorDataResult<UserRequest>(addUserRequest, "Invalid email. Try again");
-		
-		}else if(addUserRequest.getUsername().isEmpty()){
-			
-			return new ErrorDataResult<UserRequest>(addUserRequest, "Username cannot be empty");
-			
-		}else if(addUserRequest.getPassword().isEmpty()){
-			
-			return new ErrorDataResult<UserRequest>(addUserRequest, "Password cannot be empty");
-			
-		}else if(!addUserRequest.getPassword().equals(addUserRequest.getRePassword())) {
-			
-			return new ErrorDataResult<UserRequest>(addUserRequest, "Your password does not match. Try again");
+			return new ErrorDataResult<UserRequest>(result.getData(), result.getMessage());
 		
 		}else {
 			
-			String md5Password = Encryptor.encryptPass(addUserRequest.getPassword());
-			
 			User user = User.builder()
-					.email(addUserRequest.getEmail())
-					.password(md5Password)
-					.username(addUserRequest.getUsername())
+					.email(result.getData().getEmail())
+					.password(result.getData().getPassword())
+					.username(result.getData().getUsername())
 					.build();
 			
 			userRepository.save(user);
-			
-			sendVerificationEmail(user, "http://localhost:8080/api/user");
+			baseMailSender.sendVerificationEmail(user, "http://localhost:8080/api/user");
 			
 			return new SuccessDataResult<UserRequest>(addUserRequest, "User added");
 		
 		}
 	
 	}
-		
-	public void sendVerificationEmail(User user, String siteURL) throws MessagingException, UnsupportedEncodingException {
-		String toAddress = user.getEmail();
-	    String fromAddress = "hrmsrobot@gmail.com";
-	    String senderName = "HRMS Demo";
-	    String subject = "Please verify your registration";
-	    String content = "Dear [[name]],<br>"
-	            + "Please click the link below to verify your registration:<br>"
-	            + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-	            + "Thank you,<br>"
-	            + "Your company name.";
-	     
-	    MimeMessage message = mailSender.createMimeMessage();
-	    MimeMessageHelper helper = new MimeMessageHelper(message);
-	     
-	    helper.setFrom(fromAddress, senderName);
-	    helper.setTo(toAddress);
-	    helper.setSubject(subject);
-	     
-	    content = content.replace("[[name]]", user.getUsername());
-	    String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
-	     
-	    content = content.replace("[[URL]]", verifyURL);
-	     
-	    helper.setText(content, true);
-	     
-	    mailSender.send(message);
-    }
 	
 	public boolean verify(String verificationCode) {
 		

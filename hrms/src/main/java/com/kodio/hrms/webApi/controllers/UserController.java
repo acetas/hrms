@@ -25,6 +25,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/user/")
 public class UserController {
 	
+	@Autowired
 	private UserService userService;
 	
 	@Autowired
@@ -39,12 +40,15 @@ public class UserController {
 	
 	@GetMapping("verify")
 	public ResponseEntity<?> verifyUser(@Param("code") String code) {
+		
 		boolean verified = userService.verify(code);
+		
 		if(verified) {
 			return ResponseEntity.ok(new SuccessResult("Your e-mail address has been verified."));
 		} else {
 			return ResponseEntity.ok(new ErrorResult("Your e-mail address has not been verified."));
 		}
+		
 	}
 	
 }
