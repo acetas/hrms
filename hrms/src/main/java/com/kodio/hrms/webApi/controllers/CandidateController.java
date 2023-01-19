@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kodio.hrms.business.abstracts.JobSeekerService;
-import com.kodio.hrms.business.requests.JobSeekerRequest;
+import com.kodio.hrms.business.abstracts.CandidateService;
+import com.kodio.hrms.business.requests.CandidateRequest;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/jobseeker/")
-public class JobSeekerController {
+@RequestMapping("/api/candidate/")
+public class CandidateController {
 
 	@Autowired
-	private JobSeekerService jobSeekerService;
+	private CandidateService jobSeekerService;
 
 	@PostMapping("add")
-	public ResponseEntity<?> add(@Valid @RequestBody JobSeekerRequest addJobSeekerRequest) {
-		return ResponseEntity.ok(jobSeekerService.add(addJobSeekerRequest));
+	public ResponseEntity<?> add(@Valid @RequestBody CandidateRequest candidateRequest) {
+		return ResponseEntity.ok(jobSeekerService.add(candidateRequest));
 	}
 
 }

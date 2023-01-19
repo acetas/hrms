@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobSeekerRequest extends UserRequest {
+public class CandidateRequest extends UserRequest {
 
 	@NotNull
 	@NotBlank

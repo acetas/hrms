@@ -18,9 +18,9 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "jobSeekers")
+@Table(name = "candidates")
 @PrimaryKeyJoinColumn(name="userId")  
-public class JobSeeker extends User {
+public class Candidate extends User {
 
 	@Column(name = "name")
 	private String name;
