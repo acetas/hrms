@@ -35,7 +35,7 @@ public class Employer extends User {
 	private String phone;
 
 	@OneToMany(mappedBy = "employer")
-	private List<JobAdvertsiment> jobAdvertsiments;
+	private List<JobAdvertisement> jobAdvertsiments;
 	
 	@ManyToOne
 	@JoinColumn(name = "companyId")

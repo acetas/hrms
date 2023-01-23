@@ -1,6 +1,7 @@
 package com.kodio.hrms.business.responses;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class GetAllEnabledJobAdversimentResponse {
+public class GetAllEnabledJobAdvertisementResponse {
 	
 	private boolean isTemporary;
 	private int validity;
@@ -36,7 +37,7 @@ public class GetAllEnabledJobAdversimentResponse {
 	private String minSalary;
 	private String maxSalary;
 
-	private City city;
+	private List<City> cities;
 	private JobPosition jobPosition;
 	private Employer employer;
 	

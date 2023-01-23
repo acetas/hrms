@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.kodio.hrms.business.abstracts.JobPositionService;
 import com.kodio.hrms.business.requests.JobPositionRequest;
+import com.kodio.hrms.business.requests.UpdateJobPositionRequest;
 import com.kodio.hrms.business.responses.GetAllJobPositionsResponse;
 import com.kodio.hrms.core.results.DataResult;
 import com.kodio.hrms.core.results.ErrorDataResult;
+import com.kodio.hrms.core.results.Result;
 import com.kodio.hrms.core.results.SuccessDataResult;
+import com.kodio.hrms.core.results.SuccessResult;
 import com.kodio.hrms.dataAccess.abstracts.JobPositionRepository;
 import com.kodio.hrms.entities.concretes.JobPosition;
 
@@ -50,14 +53,37 @@ public class JobPositionManager implements JobPositionService {
 		for (JobPosition jobPosition : jobPositions) {
 			
 			GetAllJobPositionsResponse jobPositionBuild = GetAllJobPositionsResponse.builder()
-			.name(jobPosition.getName())
-			.build();
+					.id(jobPosition.getId())
+					.name(jobPosition.getName())
+					.build();
 			
 			getAllJobPositions.add(jobPositionBuild);
 			
 		}
 		
 		return new SuccessDataResult<List<GetAllJobPositionsResponse>>(getAllJobPositions, "All Job positions listed");
+	}
+
+	@Override
+	public Result update(int id, UpdateJobPositionRequest updateJobPositionRequest) {
+		
+		JobPosition jobPosition = jobPositionRepository.findById(id).get();
+		
+		if(updateJobPositionRequest.getName() == null || updateJobPositionRequest.getName().isEmpty()) {
+			return new ErrorDataResult<UpdateJobPositionRequest>(updateJobPositionRequest, "Job Position cannot be empty");
+		}
+		
+		jobPosition.setName(updateJobPositionRequest.getName());
+		
+		jobPositionRepository.save(jobPosition);
+		
+		return new SuccessDataResult<UpdateJobPositionRequest>(updateJobPositionRequest, "Job Position edited");
+	}
+
+	@Override
+	public Result delete(int id) {
+		jobPositionRepository.deleteById(id);
+		return new SuccessResult("Job Position deleted");
 	}
 
 }

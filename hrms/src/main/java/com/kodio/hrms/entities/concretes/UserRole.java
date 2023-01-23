@@ -12,28 +12,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@Builder
-@NoArgsConstructor
+@Entity
+@Table(name = "userRoles")
 @AllArgsConstructor
-@Table(name = "jobPositions")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisement"})
-public class JobPosition {
+@NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employee"})
+public class UserRole {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-
+	
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(mappedBy = "jobPosition")
-	private List<JobAdvertisement> jobAdvertisement;
-
+	@OneToMany(mappedBy = "userRole")
+	private List<Employee> employee;
+	
 }

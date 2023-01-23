@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodio.hrms.business.abstracts.UserService;
+import com.kodio.hrms.business.requests.UpdateUserRequest;
 import com.kodio.hrms.business.requests.UserRequest;
 import com.kodio.hrms.core.results.ErrorResult;
 import com.kodio.hrms.core.results.SuccessResult;
@@ -36,6 +39,21 @@ public class UserController {
 	@PostMapping("add")
 	public ResponseEntity<?> add(@Valid @RequestBody UserRequest addUserRequest) throws UnsupportedEncodingException, MessagingException {
 		return ResponseEntity.ok(userService.add(addUserRequest));
+	}
+	
+	@GetMapping("getAll")
+	public ResponseEntity<?> getAll(){
+		return ResponseEntity.ok(userService.getAll());
+	}
+	
+	@PutMapping("update")
+	public ResponseEntity<?> update(Long id, UpdateUserRequest updateUserRequest){
+		return ResponseEntity.ok(userService.update(id, updateUserRequest));
+	}
+	
+	@DeleteMapping("delete")
+	public ResponseEntity<?> update(Long id){
+		return ResponseEntity.ok(userService.delete(id));
 	}
 	
 	@GetMapping("verify")

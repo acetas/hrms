@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class GetAllJobPositionsResponse {
 
+	private int id;
 	private String name;
 	
 }

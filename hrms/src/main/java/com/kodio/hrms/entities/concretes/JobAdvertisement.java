@@ -1,6 +1,7 @@
 package com.kodio.hrms.entities.concretes;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,7 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "jobAdversiments")
-public class JobAdvertsiment {
+public class JobAdvertisement {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +64,6 @@ public class JobAdvertsiment {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date applicationDeadline;
-
 	
 	@Column(name="minSalary")
 	private String minSalary;
@@ -74,9 +74,22 @@ public class JobAdvertsiment {
 	@Column(name="isEnabled")
 	private boolean isEnabled;
 	
-	@OneToOne
+	@Column(name="isRemote")
+	private boolean isRemote;
+	
+	@Column(name="isOnSite")
+	private boolean isOnSite;
+	
+	@Column(name="isFullTime")
+	private boolean isFullTime;
+	
+	@Column(name="isPartTime")
+	private boolean isPartTime;
+	
+	@OneToMany
 	@NotNull
-	private City city;
+	@JoinColumn(name = "cities")
+	private List<City> cities;
 
 	@ManyToOne
 	@JoinColumn(name="jobPositionId")

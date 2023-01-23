@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobAdvertsimentWithCompanyDto {
+public class JobAdvertisementWithCompanyDto {
 
 	private int id;
 	private String company;

@@ -1,16 +1,24 @@
 package com.kodio.hrms.business.concretes;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kodio.hrms.business.abstracts.CandidateService;
 import com.kodio.hrms.business.requests.CandidateRequest;
+import com.kodio.hrms.business.requests.UpdateCandidateRequest;
 import com.kodio.hrms.business.requests.UserRequest;
+import com.kodio.hrms.business.responses.CandidateResponse;
 import com.kodio.hrms.core.results.DataResult;
 import com.kodio.hrms.core.results.ErrorDataResult;
+import com.kodio.hrms.core.results.ErrorResult;
+import com.kodio.hrms.core.results.Result;
 import com.kodio.hrms.core.results.SuccessDataResult;
+import com.kodio.hrms.core.results.SuccessResult;
+import com.kodio.hrms.core.utils.Encryptor;
 import com.kodio.hrms.core.utils.mailSender.BaseMailSender;
 import com.kodio.hrms.dataAccess.abstracts.CandidateRepository;
 import com.kodio.hrms.entities.concretes.Candidate;
@@ -28,6 +36,8 @@ public class CandidateManager implements CandidateService {
 	
 	@Autowired
     private BaseMailSender baseMailSender;
+	
+	private String verifyUrl = "http://localhost:8080/api/user";
 
 	public DataResult<CandidateRequest> add(CandidateRequest candidateRequest) throws UnsupportedEncodingException, MessagingException {
 			
@@ -73,6 +83,74 @@ public class CandidateManager implements CandidateService {
 			return new SuccessDataResult<CandidateRequest>(candidateRequest, "Candidate added");
 		}
 
+	}
+
+	@Override
+	public Result update(Long id, UpdateCandidateRequest updateCandidateRequest) {
+		
+		Candidate user = candidateRepository.findById(id).get();
+		
+		Result result = baseUserManager.update(id, updateCandidateRequest);
+		
+		if(!result.isSuccess()) {
+			return new ErrorResult(result.getMessage());
+		}
+		
+		if(updateCandidateRequest.getPassword() != null && !updateCandidateRequest.getPassword().isEmpty()) {
+			
+			String md5NewPassword = Encryptor.encryptPass(updateCandidateRequest.getPassword());
+			user.setPassword(md5NewPassword);
+		}
+		
+		if(updateCandidateRequest.getUsername() != null && !updateCandidateRequest.getUsername().isEmpty()) {
+			user.setUsername(updateCandidateRequest.getUsername());
+		}
+		
+		if(updateCandidateRequest.getEmail() != null && !updateCandidateRequest.getEmail().isEmpty()) {
+			
+			user.setEmail(updateCandidateRequest.getEmail());
+			
+			try {
+				baseMailSender.sendVerificationEmail(user, verifyUrl);
+			} catch (UnsupportedEncodingException | MessagingException e) {
+				e.printStackTrace();
+			}
+		}
+				
+		candidateRepository.save(user);
+		
+		CandidateResponse candidateResponse = CandidateResponse.builder()
+				.email(user.getEmail())
+				.username(user.getUsername())
+				.name(user.getName())
+				.surName(user.getSurName())
+				.build();
+		
+		return new SuccessDataResult<CandidateResponse>(candidateResponse, "Candidate is edited");
+	}
+
+	@Override
+	public Result delete(Long id) {
+		candidateRepository.deleteById(id);
+		return new SuccessResult("Candidate deleted");
+	}
+
+	@Override
+	public DataResult<List<CandidateResponse>> getAll() {
+		List<Candidate> candidates = candidateRepository.findAll();
+		List<CandidateResponse> candidateResponses = new ArrayList<>();
+		
+		for (Candidate candidate : candidates) {
+			CandidateResponse candidateResponse = CandidateResponse.builder()
+					.name(candidate.getName())
+					.surName(candidate.getSurName())
+					.email(candidate.getEmail())
+					.username(candidate.getUsername())
+					.build();
+			
+			candidateResponses.add(candidateResponse);
+		}
+		return new SuccessDataResult<List<CandidateResponse>>(candidateResponses, "Candidates listed");
 	}
 
 }

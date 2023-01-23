@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.kodio.hrms.entities.concretes.JobAdvertsiment;
+import com.kodio.hrms.entities.concretes.JobAdvertisement;
 
 @Repository
-public interface JobAdversimentRepository extends JpaRepository<JobAdvertsiment, Integer> {
+public interface JobAdvertisementRepository extends JpaRepository<JobAdvertisement, Integer> {
 
-	List<JobAdvertsiment> findByIsEnabled(boolean active);
-	List<JobAdvertsiment> findByIsEnabled_OrderByListingDateAsc(boolean active);
-	List<JobAdvertsiment> findByIsEnabled_OrderByListingDateDesc(boolean active);
+	List<JobAdvertisement> findByIsEnabled(boolean active);
+	List<JobAdvertisement> findByIsEnabled_OrderByListingDateAsc(boolean active);
+	List<JobAdvertisement> findByIsEnabled_OrderByListingDateDesc(boolean active);
 		
 	// TODO: Hata var !!
 	

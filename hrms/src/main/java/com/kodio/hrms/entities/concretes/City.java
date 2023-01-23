@@ -1,10 +1,13 @@
 package com.kodio.hrms.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cities")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertsiment"})
 public class City {
 
 	@Id
@@ -26,5 +30,8 @@ public class City {
 	
 	@Column(name = "name")
 	private String name;
+	
+	@ManyToOne
+	private JobAdvertisement jobAdvertsiment;
 	
 }

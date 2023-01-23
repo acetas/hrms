@@ -1,6 +1,7 @@
 package com.kodio.hrms.webApi.controllers;
 
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,38 +13,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kodio.hrms.business.abstracts.CandidateService;
-import com.kodio.hrms.business.requests.CandidateRequest;
-import com.kodio.hrms.business.requests.UpdateCandidateRequest;
+import com.kodio.hrms.business.abstracts.EmployeeService;
+import com.kodio.hrms.business.requests.EmployeeRequest;
+import com.kodio.hrms.business.requests.UpdateEmployeeRequest;
 
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/candidate/")
-public class CandidateController {
+@RequestMapping("/api/employee/")
+public class EmployeeController {
 
 	@Autowired
-	private CandidateService jobSeekerService;
+	private EmployeeService employeeService;
 
 	@PostMapping("add")
-	public ResponseEntity<?> add(@Valid @RequestBody CandidateRequest candidateRequest) throws UnsupportedEncodingException, MessagingException {
-		return ResponseEntity.ok(jobSeekerService.add(candidateRequest));
+	public ResponseEntity<?> add(@Valid @RequestBody EmployeeRequest employereRequests) throws MalformedURLException, UnsupportedEncodingException, MessagingException {
+		return ResponseEntity.ok(employeeService.add(employereRequests));
 	}
 	
 	@PutMapping("update")
-	public ResponseEntity<?> update(Long id, UpdateCandidateRequest updateCandidateRequest){
-		return ResponseEntity.ok(jobSeekerService.update(id, updateCandidateRequest));
+	public ResponseEntity<?> update(Long id, UpdateEmployeeRequest updateEmployeeRequest){
+		return ResponseEntity.ok(employeeService.update(id, updateEmployeeRequest));
 	}
 	
 	@DeleteMapping("deleteById")
 	public ResponseEntity<?> delete(Long id){
-		return ResponseEntity.ok(jobSeekerService.delete(id));
+		return ResponseEntity.ok(employeeService.delete(id));
 	}
 	
 	@GetMapping("getAll")
 	public ResponseEntity<?> getAll(){
-		return ResponseEntity.ok(jobSeekerService.getAll());
+		return ResponseEntity.ok(employeeService.getAll());
 	}
-
+	
 }
