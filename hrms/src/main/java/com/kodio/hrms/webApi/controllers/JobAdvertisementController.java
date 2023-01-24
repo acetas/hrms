@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodio.hrms.business.abstracts.JobAdvertisementService;
@@ -17,7 +18,7 @@ import com.kodio.hrms.business.requests.UpdateJobAdvertisementRequest;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/jobadversiment/")
+@RequestMapping("/api/jobadvertisement/")
 public class JobAdvertisementController {
 
 	@Autowired
@@ -54,9 +55,9 @@ public class JobAdvertisementController {
 	}
 	
 	
-//	@GetMapping("getByCompany")
-//	public ResponseEntity<?> getAllJobAdvForCompany(@RequestParam int id){
-//		return ResponseEntity.ok(jobAdvertisementService.getAllJobAdvForCompany(id));
-//	}
+	@GetMapping("getByCompany")
+	public ResponseEntity<?> getAllJobAdvForCompany(@RequestParam int id){
+		return ResponseEntity.ok(jobAdvertisementService.getAllJobAdvForCompany(id));
+	}
 		
 }

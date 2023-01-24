@@ -16,6 +16,7 @@ import com.kodio.hrms.core.results.SuccessDataResult;
 import com.kodio.hrms.core.results.SuccessResult;
 import com.kodio.hrms.dataAccess.abstracts.JobAdvertisementRepository;
 import com.kodio.hrms.entities.concretes.JobAdvertisement;
+import com.kodio.hrms.entities.dtos.JobAdvertisementWithCompanyDto;
 
 @Service
 public class JobAdvertisementManager implements JobAdvertisementService {
@@ -197,11 +198,11 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 		return new SuccessResult("Job Advertisement deleted");
 	}
 
-//	@Override
-//	public DataResult<List<jobAdvertisementWithCompanyDto>> getAllJobAdvForCompany(int id) {
-//		
-//		return new SuccessDataResult<List<jobAdvertisementWithCompanyDto>>(jobAdversimentRepository.findByCompanyId(id), "Job Advertsiment listed for Company");
-//		
-//	}
+	@Override
+	public DataResult<List<JobAdvertisementWithCompanyDto>> getAllJobAdvForCompany(int id) {
+		
+		return new SuccessDataResult<List<JobAdvertisementWithCompanyDto>>(jobAdversimentRepository.findByCompanyId(id), "Job Advertsiment listed for Company");
+		
+	}
 
 }

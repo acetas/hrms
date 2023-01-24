@@ -29,9 +29,17 @@ public class Company {
 	@Column(name = "id")
 	private int id;
 	
+	@Column(name = "image")
+	@NotNull
+	private String image;
+	
 	@Column(name = "name")
 	@NotNull
 	private String name;
+	
+	@Column(name = "description", columnDefinition = "TEXT")
+	@NotNull
+	private String description;
 	
 	@OneToMany(mappedBy = "company")
 	List<Employer> employers;

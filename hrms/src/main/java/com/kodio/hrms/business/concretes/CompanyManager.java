@@ -31,6 +31,8 @@ public class CompanyManager implements CompanyService {
 		
 		Company companyOriginal = companyRepository.findById(id).get();
 		companyOriginal.setName(company.getName());
+		companyOriginal.setDescription(company.getDescription());
+		companyOriginal.setImage(company.getImage());
 		
 		companyRepository.save(companyOriginal);
 		

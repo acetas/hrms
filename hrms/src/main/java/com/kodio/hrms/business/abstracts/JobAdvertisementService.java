@@ -7,6 +7,7 @@ import com.kodio.hrms.business.requests.UpdateJobAdvertisementRequest;
 import com.kodio.hrms.business.responses.GetAllEnabledJobAdvertisementResponse;
 import com.kodio.hrms.core.results.DataResult;
 import com.kodio.hrms.core.results.Result;
+import com.kodio.hrms.entities.dtos.JobAdvertisementWithCompanyDto;
 
 public interface JobAdvertisementService {
 
@@ -18,7 +19,7 @@ public interface JobAdvertisementService {
 	DataResult<List<GetAllEnabledJobAdvertisementResponse>> getAllEnabledByListingDateAsc();
 	DataResult<List<GetAllEnabledJobAdvertisementResponse>> getAllEnabledByListingDateDesc();	
 	
-	//DataResult<List<JobAdvertsimentWithCompanyDto>> getAllJobAdvForCompany(int id);	
+	DataResult<List<JobAdvertisementWithCompanyDto>> getAllJobAdvForCompany(int id);	
 	
 	
 }
